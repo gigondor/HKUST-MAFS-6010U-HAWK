@@ -1,0 +1,7 @@
+fpath = r'C:/Users/zgxue/Desktop/data/SE/2018_05_bf.txt'
+with open(fpath, 'r') as f:
+    s = f.read()
+
+from textblob import TextBlob
+blob = TextBlob(s)
+blob.sentiment

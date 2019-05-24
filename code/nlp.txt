@@ -1,0 +1,61 @@
+#抓取网页
+import urllib.request
+response = urllib.request.urlopen('https://www.onlinemarketplaces.com/articles/24577-Startup-SenseTime-hopes-to-combine-AI-and-autonomous-driving?utm_term=Autofeed&utm_medium=Social&utm_source=Twitter#Echobox=1554027976')
+html = response.read()
+#print(len(html))
+
+#去掉html标记
+import nltk
+from bs4 import BeautifulSoup
+import re
+soup = BeautifulSoup(html,'html5lib')
+clean = soup.get_text()
+tokens = [tok for tok in clean.split()]
+#print(tokens)
+) 
+######
+
+
+#统计词频
+freq = nltk.FreqDist(s)
+#print(freq)
+for key,val in freq.items():
+    print (str(key) + ':' + str(val))
+
+#去掉停用词
+import matplotlib
+from nltk.corpus import stopwords
+stopwords = stopwords.words('english')
+clean_tokens = [tok for tok in tokens if len(tok.lower())>1 and (tok.lower() not in stopwords)]
+freq = nltk.FreqDist(clean_tokens)
+freplot = freq.plot(20,cumulative = False)
+
+#绘制词云图
+#import wordcloud 
+#f = open('testCloud.txt','w')
+#for word in clean_tokens:
+#    f.write(str(word.encode('utf-8'))+'\n')
+#f.close()
+#f = open('testCloud.txt','r').read()
+#wordcloud = WordCloud(background_color = "white",width = 1000,height = 800,margin = 2).generate(f)
+#matplotlib.pyplot.imshow(wordcloud)	
+
+
+
+inputstring = "Artificial intelligence is quickly becoming apart of everyday business operations for several industries. SenseTime, an AI-based startup company, has been taking on the task of bringing AI to more markets and have found success within autonomous vehicles. The company has been pushing toward new projects and are currently looking for investors from other companies that would share in the potential of AI.SenseTime has come up with three various AI based technologies that will change the way automobiles are driven on roads. In fact, the startup is aiming to device a program that enables the car to be self driven. One of the ideas is the Driver Monitor System, wherein through the help of face recognition, fatigue detection, attention detection and gesture recognition, it will cater for situations such as driver falling asleep on the wheel, vehicle robbery and programmed responses that will act once recognized.The startup is also looking into the Lane Departure Warning system, where the utilization on monocular cameras will help in distinguishing the types of lanes, such as the solid line, dotted line double line etc,  under various lighting and weather conditions, in real time. This will help in situations such as monsoons and heavy snowfall, as the LDW system puts out the distance between the vehicle and lane line as well as when the vehicle will leave the lane line. The system is so advanced that it wills end a warning signal immediately if the vehicle deviates onto the projection path."
+
+from nltk.tokenize import sent_tokenize
+all_sent = sent_tokenize(inputstring)
+print(all_sent) 
+
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+# nltk.download('vader_lexicon')
+view = all_sent
+sid = SentimentIntensityAnalyzer()
+for sen in view:
+    print(sen)
+    ss = sid.polarity_scores(sen)
+    for k in ss:
+        print('{0}:{1},'.format(k, ss[k]), end='')
+    print()

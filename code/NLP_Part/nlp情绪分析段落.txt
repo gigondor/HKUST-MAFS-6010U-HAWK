@@ -1,0 +1,42 @@
+import sys
+import numpy as np
+import pandas as pd
+ 
+from sklearn.decomposition import pca
+from sklearn import svm
+from sklearn import metrics
+ 
+# 数据准备
+
+datapath =r'C:/Users/zgxue/Desktop/data/SE/2018_05_bf.txt'
+
+df = pd.read_csv(datapath)
+
+x = df.iloc[:, 2:]
+
+y = df.iloc[:, 1]
+ 
+
+# PCA降维。计算全部贡献率
+
+n_components = 400
+
+pca_model = pca.PCA(n_components)
+
+pca_model.fit(x)
+
+# pca作图
+
+# 取100维作为分类器输入
+
+x_pca = pca.PCA(n_components=100).fit_transform(x)  # 先拟合数据再标准化
+
+# SVM分类
+
+clf = svm.SVC(C=2.0, probability=True)
+
+clf.fit(x_pca, y)
+
+print('Test Accuracy is: %.2f' % clf.score(x_pca, y))
+
+
